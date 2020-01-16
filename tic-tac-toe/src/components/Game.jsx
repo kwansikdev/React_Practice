@@ -14,12 +14,9 @@ export default class Game extends Component {
       xisNext: true,
       step: 0
     };
-
-    // Object.getOwnPropertyNames(Game.prototype).forEach(
-    //   key => (this[key] = this[key].bind(this)),
-    // );
   }
 
+  // 승리조건
   checkWinner(squares) {
     const check = [
       [0, 1, 2],
@@ -45,16 +42,11 @@ export default class Game extends Component {
     return null;
   }
 
+  // 클릭할 때마다 이벤트
   handleClick(i) {
-    // 클릭하기 전 histroy 상태
     const history = this.state.history.slice(0, this.state.step + 1);
-
-    // 현재 상태
     const current = history[history.length - 1];
-
     const squares = current.squares.slice();
-
-    console.log("asd", current);
 
     if (this.checkWinner(squares)) {
       return;
@@ -69,6 +61,7 @@ export default class Game extends Component {
     });
   }
 
+  // 과거로 이동
   goBack(square, i) {
     this.setState({
       step: i,
@@ -77,6 +70,7 @@ export default class Game extends Component {
   }
 
   render() {
+    // 승리한 사람 및 턴 표시
     const winner = this.checkWinner(
       this.state.history[this.state.history.length - 1].squares
     );
@@ -85,6 +79,7 @@ export default class Game extends Component {
       ? `Winner: ${winner}`
       : `Next Player: ${this.state.xisNext ? "X" : "O"}`;
 
+    // 과거로 이동하는 버튼 생성
     const moveHistory = this.state.history.map((state, i) => {
       const square = state.squares;
 
@@ -96,7 +91,7 @@ export default class Game extends Component {
         </li>
       );
     });
-    console.log(this.state);
+
     return (
       <div className="game">
         <div className="game-board">
